@@ -1,6 +1,11 @@
 class CartsController < ApplicationController
 
   def show
+    if cart.empty?
+      @message = "Your cart is empty."
+    else
+      @message = nil
+    end
   end
 
   def add_item
