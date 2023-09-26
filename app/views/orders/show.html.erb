@@ -1,5 +1,4 @@
 <section class="orders-show">
-
   <header class="page-header">
     <h1>Order #<%= @order.id %></h1>
   </header>
@@ -8,6 +7,31 @@
     <h4>Thank you for your order!</h4>
   </div>
 
-  <%= link_to "Continue Shopping", root_path, class: 'btn btn-lg btn-primary' %>
+  <!-- Iterate through the line items in the order -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @order.line_items.each do |line_item| %>
+        <%= render partial: 'carts/item', locals: { product: line_item.product, quantity: line_item.quantity } %>
 
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="order-summary">
+  <p>Total Order Amount: $<%= sprintf('%.2f', @order.total_cents / 100.0) %></p>
+
+    <p>Email Used: <%= @order.email %></p>
+  </div>
+
+  <%= link_to "Continue Shopping", root_path, class: 'btn btn-lg btn-primary' %>
 </section>
+
