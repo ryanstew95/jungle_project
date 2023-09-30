@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-  before_filter :authorize
+  before_action :authorize
   def show
   end
 

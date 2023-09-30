@@ -1,12 +1,23 @@
 
 <header class="<%= current_page?(root_path) ? "hero" : "hero small" %>">
   <section class="title">
+  
+
+
     <h3>Welcome to</h3>
     <h1>The Jungle</h1>
     <h2>Where you can find any plants!</h2>
   </section>
 </header>
 <nav class="navbar navbar-expand-lg navbar-dark sticky-nav">
+<% if current_user %>
+<li class="nav-item">
+  <%= link_to 'Logout', '/logout', class: 'nav-link logout-btn' %>
+</li>
+<% else %>
+<%= link_to 'Signup', '/signup' %>
+<%= link_to 'Login', '/login' %>
+<% end %>
   <div class="container">
     <a class="navbar-brand" href="<%= root_path %>">Jungle</a>
     <button
