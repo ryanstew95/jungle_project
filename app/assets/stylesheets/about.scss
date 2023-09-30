@@ -1,3 +1,18 @@
 // Place all the styles related to the about controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+// styles.scss
+
+// Define common padding
+$common-padding: 10px;
+
+// Header styles
+h1, h3 {
+  padding: $common-padding;
+  padding-top: 50px;
+}
+
+// Paragraph styles
+p {
+  padding: $common-padding;
+}
