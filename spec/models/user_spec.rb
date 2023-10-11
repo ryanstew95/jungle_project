@@ -84,4 +84,42 @@ expect(user).to be_valid
     expect(user.errors.full_messages).to include("Last name can't be blank")
   end  
 
+  it 'is invalid if password is less than four characters' do
+    user = User.new(
+      email: 'john@example.com',
+      password: '123',
+      password_confirmation: '123',
+      first_name: 'John',
+      last_name: 'Doe'
+    )
+    expect(user).not_to be_valid
+    expect(user.errors.full_messages).to include("Password is too short (minimum is 4 characters)")
+  end  
+  describe '.authenticate_with_credentials' do
+    def create_user(email, password)
+      User.create(
+        email: email,
+        password: password,
+        password_confirmation: password,
+        first_name: 'John',
+        last_name: 'Doe'
+      )
+    end
+    it 'returns nil if authentication fails' do
+      user = create_user('test@example.com', 'password123')
+      authenticated_user = User.authenticate_with_credentials('test@example.com', 'wrong_password')
+      expect(authenticated_user).to be_nil
+    end
+    it 'ignores leading and trailing whitespaces in email' do
+      user = create_user('test@example.com', 'password123')
+      authenticated_user = User.authenticate_with_credentials('  test@example.com  ', 'password123')
+      expect(authenticated_user).to eq(user)
+    end
+
+    it 'is case-insensitive for email' do
+      user = create_user('test@example.com', 'password123')
+      authenticated_user = User.authenticate_with_credentials('TEST@example.com', 'password123')
+      expect(authenticated_user).to eq(user)
+    end
+  end
 end
