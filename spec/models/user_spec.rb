@@ -45,4 +45,15 @@ expect(user).to be_valid
     )
     expect(user).to be_valid
   end
+  it 'is invalid without an email' do
+    user = User.new(
+      email: nil,
+      password: 'password',
+      password_confirmation: 'password',
+      first_name: 'John',
+      last_name: 'Doe'
+    )
+    expect(user).not_to be_valid
+    expect(user.errors.full_messages).to include("Email can't be blank")
+  end
 end
